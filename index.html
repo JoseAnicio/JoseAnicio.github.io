@@ -53,13 +53,12 @@
       z-index: 100;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       padding: 0 2rem;
       height: 56px;
       background: rgba(251,251,246,0.93);
       box-shadow: 0 1px 0 var(--border);
       backdrop-filter: blur(12px);
-      border-bottom: none;
     }
     nav::after {
       content: '';
@@ -69,8 +68,28 @@
       background: linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--yellow) 60%, var(--green) 85%, transparent 100%);
       opacity: 0.7;
     }
-    .nav-logo { display: none; }
-    .nav-logo span { color: var(--accent); }
+
+    /* Logo */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+    }
+    .nav-logo .logo-tilde { color: var(--accent); }
+    .nav-logo .logo-slash { color: var(--text-dim); }
+
+    /* Center links */
+    .nav-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
     .nav-links {
       display: flex;
       gap: 2rem;
@@ -83,6 +102,71 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--accent); }
+
+    /* Language switcher */
+    .lang-switcher {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: var(--radius);
+      font-size: 12px;
+      font-weight: 500;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.04em;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .lang-btn:hover { background: #004d40; }
+    .lang-btn svg {
+      width: 12px;
+      height: 12px;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .lang-switcher.open .lang-btn svg { transform: rotate(180deg); }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--bg);
+      border: 1px solid var(--border-hover);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,105,92,0.12);
+      min-width: 130px;
+      z-index: 200;
+    }
+    .lang-switcher.open .lang-dropdown { display: block; }
+
+    .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .lang-option:hover { background: var(--bg2); color: var(--accent); }
+    .lang-option.active { color: var(--accent); font-weight: 500; }
+    .lang-option .lang-flag { font-size: 15px; line-height: 1; }
 
     /* ── LAYOUT ── */
     .container {
@@ -104,9 +188,7 @@
       align-items: flex-start;
       gap: 2.5rem;
     }
-    .avatar-wrap {
-      flex-shrink: 0;
-    }
+    .avatar-wrap { flex-shrink: 0; }
     .avatar-wrap img {
       width: 88px;
       height: 88px;
@@ -114,7 +196,6 @@
       border: 2px solid var(--border-hover);
       display: block;
     }
-    .hero-text {}
     .hero-label {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
@@ -170,10 +251,7 @@
       cursor: pointer;
       border: none;
     }
-    .btn-primary {
-      background: var(--yellow);
-      color: #fff;
-    }
+    .btn-primary { background: var(--yellow); color: #fff; }
     .btn-primary:hover { background: #e6ae00; }
     .btn-ghost {
       background: transparent;
@@ -182,37 +260,8 @@
     }
     .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* ── STATS ROW ── */
-    .stats-row {
-      display: flex;
-      gap: 0;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-bottom: 0;
-    }
-    .stat {
-      flex: 1;
-      padding: 1.25rem 1.5rem;
-      border-right: 1px solid var(--border);
-    }
-    .stat:last-child { border-right: none; }
-    .stat-number {
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .stat-label {
-      font-size: 12px;
-      color: var(--text-dim);
-    }
-
     /* ── SECTION HEADER ── */
-    .section-header {
-      margin-bottom: 2.5rem;
-    }
+    .section-header { margin-bottom: 2.5rem; }
     .section-eyebrow {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
@@ -243,7 +292,6 @@
       border-radius: var(--radius-lg);
       overflow: hidden;
     }
-
     .project-card {
       background: var(--bg);
       display: grid;
@@ -251,17 +299,14 @@
       transition: background 0.2s;
     }
     .project-card:hover { background: var(--bg2); }
-
     .project-card.reverse { direction: rtl; }
     .project-card.reverse > * { direction: ltr; }
-
     .project-content {
       padding: 2.5rem 2.5rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
-
     .project-image-wrap {
       overflow: hidden;
       position: relative;
@@ -277,10 +322,7 @@
       transition: opacity 0.3s, transform 0.4s;
       min-height: 280px;
     }
-    .project-card:hover .project-image-wrap img {
-      opacity: 1;
-      transform: scale(1.02);
-    }
+    .project-card:hover .project-image-wrap img { opacity: 1; transform: scale(1.02); }
     .project-image-placeholder {
       width: 100%;
       height: 100%;
@@ -290,11 +332,7 @@
       justify-content: center;
       background: var(--bg3);
     }
-    .placeholder-icon {
-      font-size: 48px;
-      opacity: 0.15;
-    }
-
+    .placeholder-icon { font-size: 48px; opacity: 0.15; }
     .project-tag {
       display: inline-flex;
       align-items: center;
@@ -312,7 +350,6 @@
     .tag-security { background: var(--orange-soft); color: var(--orange); border: 1px solid rgba(212,130,10,0.2); }
     .tag-bi { background: var(--green-soft); color: var(--green); border: 1px solid rgba(0,137,123,0.2); }
     .tag-automation { background: var(--purple-soft); color: var(--purple); border: 1px solid rgba(107,127,196,0.2); }
-
     .project-title {
       font-size: 19px;
       font-weight: 600;
@@ -342,10 +379,7 @@
       border: 1px solid var(--border);
       border-radius: 5px;
     }
-    .project-links {
-      display: flex;
-      gap: 10px;
-    }
+    .project-links { display: flex; gap: 10px; }
     .project-link {
       font-size: 12px;
       font-weight: 500;
@@ -370,18 +404,13 @@
       border-radius: var(--radius-lg);
       overflow: hidden;
     }
-    .skills-grid .skill-group:last-child {
-      grid-column: 1 / -1;
-    }
+    .skills-grid .skill-group:last-child { grid-column: 1 / -1; }
     .skills-grid .skill-group:last-child .skill-list {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px 2rem;
     }
-    .skill-group {
-      background: var(--bg);
-      padding: 1.75rem;
-    }
+    .skill-group { background: var(--bg); padding: 1.75rem; }
     .skill-group-title {
       font-size: 12px;
       font-weight: 500;
@@ -390,11 +419,7 @@
       letter-spacing: 0.08em;
       margin-bottom: 1rem;
     }
-    .skill-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .skill-list { display: flex; flex-direction: column; gap: 8px; }
     .skill-item {
       display: flex;
       align-items: center;
@@ -402,12 +427,7 @@
       font-size: 13px;
       color: var(--text-muted);
     }
-    .skill-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .skill-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
     .dot-blue { background: var(--accent); }
     .dot-orange { background: var(--orange); }
     .dot-green { background: var(--green); }
@@ -416,12 +436,7 @@
 
     /* ── ABOUT ── */
     #about { border-top: 1px solid var(--border); }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: start;
-    }
+    .about-grid--single { grid-template-columns: 1fr; }
     .about-text p {
       font-size: 14px;
       color: var(--text-muted);
@@ -430,68 +445,17 @@
     }
     .about-text p:last-child { margin-bottom: 0; }
     .about-text strong { color: var(--text); font-weight: 500; }
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .timeline-item {
-      padding: 1.25rem 0 1.25rem 1.5rem;
-      border-left: 1px solid var(--border);
-      position: relative;
-    }
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -4px;
-      top: 1.6rem;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      border: 2px solid var(--bg);
-    }
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: var(--text-dim);
-      margin-bottom: 3px;
-    }
-    .timeline-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 2px;
-    }
-    .timeline-sub {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
 
-    .about-grid--single {
-      grid-template-columns: 1fr;
-    }
-
+    /* ── CONTACT ── */
     #contact {
       border-top: 1px solid var(--border);
       text-align: center;
       padding-bottom: 4rem;
     }
-    .contact-inner {
-      max-width: 480px;
-      margin: 0 auto;
-    }
+    .contact-inner { max-width: 480px; margin: 0 auto; }
     .contact-inner .section-title { margin-bottom: 0.75rem; }
-    .contact-inner p {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-    }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+    .contact-inner p { font-size: 14px; color: var(--text-muted); margin-bottom: 2rem; }
+    .contact-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
     /* ── FOOTER ── */
     footer {
@@ -501,21 +465,15 @@
       align-items: center;
       justify-content: space-between;
     }
-    footer p {
-      font-size: 12px;
-      color: var(--text-dim);
-    }
+    footer p { font-size: 12px; color: var(--text-dim); }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 0 1.25rem; }
-      .nav-links { display: none; }
+      .nav-center { display: none; }
       .container { padding: 0 1.25rem; }
       .hero-inner { flex-direction: column; gap: 1.5rem; }
       .hero-name { font-size: 28px; }
-      .stats-row { flex-direction: column; }
-      .stat { border-right: none; border-bottom: 1px solid var(--border); }
-      .stat:last-child { border-bottom: none; }
       .project-card { grid-template-columns: 1fr; }
       .project-card.reverse { direction: ltr; }
       .project-image-wrap { min-height: 220px; }
@@ -524,7 +482,6 @@
       .skills-grid { grid-template-columns: 1fr; }
       .skills-grid .skill-group:last-child { grid-column: 1; }
       .skills-grid .skill-group:last-child .skill-list { grid-template-columns: 1fr; }
-      .about-grid { grid-template-columns: 1fr; }
       section { padding: 3.5rem 0; }
     }
   </style>
@@ -533,13 +490,41 @@
 
   <!-- NAV -->
   <nav>
-    <span class="nav-logo"><span>~/</span>joseanicio</span>
-    <ul class="nav-links">
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <!-- Logo left -->
+    <a href="#hero" class="nav-logo">
+      <span class="logo-tilde">~</span><span class="logo-slash">/</span>joseanicio
+    </a>
+
+    <!-- Links center -->
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+        <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+        <li><a href="#about" data-i18n="nav.about">About</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Language switcher right -->
+    <div class="lang-switcher" id="langSwitcher">
+      <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+        <span id="langCurrent">EN</span>
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="2,4 6,8 10,4"/>
+        </svg>
+      </button>
+      <div class="lang-dropdown" role="menu">
+        <button class="lang-option active" data-lang="en" role="menuitem">
+          <span class="lang-flag">🇺🇸</span> English
+        </button>
+        <button class="lang-option" data-lang="pt" role="menuitem">
+          <span class="lang-flag">🇧🇷</span> Português
+        </button>
+        <button class="lang-option" data-lang="es" role="menuitem">
+          <span class="lang-flag">🇪🇸</span> Español
+        </button>
+      </div>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -550,12 +535,12 @@
           <img src="https://media.licdn.com/dms/image/v2/D4D03AQGGacVYDQ3jWA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1696338823204?e=1782950400&v=beta&t=RL7jQiFWaIilVevVswXVYAWsIXiAEjagzpvfxuWEHI8" alt="José Anício" />
         </div>
         <div class="hero-text">
-          <p class="hero-label">Data Engineer / Data Scientist / Data Analyst</p>
+          <p class="hero-label" data-i18n="hero.label">Data Engineer / Data Scientist / Data Analyst</p>
           <h1 class="hero-name">José Anício</h1>
-          <p class="hero-bio">
+          <p class="hero-bio" data-i18n="hero.bio">
             I build end-to-end data systems — from raw data ingestion pipelines to machine learning models
             and interactive dashboards. My work sits at the intersection of <strong style="color:var(--text);font-weight:500;">data engineering</strong>,
-          <strong style="color:var(--text);font-weight:500;">data science</strong>, and <strong style="color:var(--text);font-weight:500;">data analytics</strong>.
+            <strong style="color:var(--text);font-weight:500;">data science</strong>, and <strong style="color:var(--text);font-weight:500;">data analytics</strong>.
           </p>
           <div class="hero-chips">
             <span class="chip">Python / SQL / R</span>
@@ -568,11 +553,11 @@
           <div class="hero-links">
             <a href="https://github.com/JoseAnicio" target="_blank" class="btn btn-primary">
               <svg viewBox="0 0 16 16" fill="currentColor" width="15" height="15"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-              GitHub Profile
+              <span data-i18n="hero.github">GitHub Profile</span>
             </a>
-            <a href="mailto: ojoseanicio@gmail.com" class="btn btn-ghost">
+            <a href="mailto:ojoseanicio@gmail.com" class="btn btn-ghost">
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" width="15" height="15"><path d="M2.5 5.5l7.5 5 7.5-5M2.5 4.5h15a1 1 0 011 1v9a1 1 0 01-1 1h-15a1 1 0 01-1-1v-9a1 1 0 011-1z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Get in touch
+              <span data-i18n="hero.contact">Get in touch</span>
             </a>
             <a href="https://linkedin.com/in/joseanicio" target="_blank" class="btn btn-ghost">
               <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
@@ -588,9 +573,9 @@
   <section id="projects">
     <div class="container">
       <div class="section-header">
-        <p class="section-eyebrow">Work</p>
-        <h2 class="section-title">Featured projects</h2>
-        <p class="section-sub">A selection of systems built across ML, security analytics, and business intelligence.</p>
+        <p class="section-eyebrow" data-i18n="projects.eyebrow">Work</p>
+        <h2 class="section-title" data-i18n="projects.title">Featured projects</h2>
+        <p class="section-sub" data-i18n="projects.sub">A selection of systems built across ML, security analytics, and business intelligence.</p>
       </div>
 
       <div class="projects-grid">
@@ -599,8 +584,8 @@
         <div class="project-card">
           <div class="project-content">
             <span class="project-tag tag-ml">Machine Learning</span>
-            <h3 class="project-title">Crop Prediction System</h3>
-            <p class="project-desc">
+            <h3 class="project-title" data-i18n="proj1.title">Crop Prediction System</h3>
+            <p class="project-desc" data-i18n="proj1.desc">
               An end-to-end ML system that recommends the best crop to plant and estimates yield from soil and climate data.
               Built on a full data engineering pipeline — from Google BigQuery through PostgreSQL to a live Gradio interface —
               achieving near-perfect classification accuracy (≈99–100%) across 22 crop types.
@@ -616,25 +601,21 @@
             <div class="project-links">
               <a href="https://github.com/JoseAnicio/CropPredictionSystem" target="_blank" class="project-link">
                 <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                View on GitHub
+                <span data-i18n="proj.github">View on GitHub</span>
               </a>
             </div>
           </div>
           <div class="project-image-wrap">
-            <img
-              src="https://github.com/JoseAnicio/CropPredictionSystem/raw/main/images/app_image1.png"
-              alt="Crop Prediction System interface"
-              onerror="this.parentElement.innerHTML='<div class=\'project-image-placeholder\'><span class=\'placeholder-icon\'>🌾</span></div>'"
-            />
+            <img src="https://github.com/JoseAnicio/CropPredictionSystem/raw/main/images/app_image1.png" alt="Crop Prediction System interface" onerror="this.parentElement.innerHTML='<div class=\'project-image-placeholder\'><span class=\'placeholder-icon\'>🌾</span></div>'" />
           </div>
         </div>
 
         <!-- 2. AskCVE -->
         <div class="project-card reverse">
           <div class="project-content">
-            <span class="project-tag tag-security">Security · LLM</span>
-            <h3 class="project-title">AskCVE — RAG Security Q&A</h3>
-            <p class="project-desc">
+            <span class="project-tag tag-security" data-i18n="proj2.tag">Security · LLM</span>
+            <h3 class="project-title" data-i18n="proj2.title">AskCVE — RAG Security Q&A</h3>
+            <p class="project-desc" data-i18n="proj2.desc">
               A Retrieval-Augmented Generation system for querying real vulnerability data from the National Vulnerability Database (NVD).
               Instead of relying on generic LLM knowledge, questions are answered by finding the 5 most semantically relevant CVEs
               and grounding Llama 3.1's response in actual exploit data — across Apache, OpenSSL, Linux, WordPress, and more.
@@ -650,25 +631,21 @@
             <div class="project-links">
               <a href="https://github.com/JoseAnicio/AskCVE" target="_blank" class="project-link">
                 <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                View on GitHub
+                <span data-i18n="proj.github">View on GitHub</span>
               </a>
             </div>
           </div>
           <div class="project-image-wrap">
-            <img
-              src="https://github.com/JoseAnicio/AskCVE/raw/main/images/app_print.png"
-              alt="AskCVE chat interface"
-              onerror="this.parentElement.innerHTML='<div class=\'project-image-placeholder\'><span class=\'placeholder-icon\'>🔐</span></div>'"
-            />
+            <img src="https://github.com/JoseAnicio/AskCVE/raw/main/images/app_print.png" alt="AskCVE chat interface" onerror="this.parentElement.innerHTML='<div class=\'project-image-placeholder\'><span class=\'placeholder-icon\'>🔐</span></div>'" />
           </div>
         </div>
 
         <!-- 3. HostRiskClustering -->
         <div class="project-card">
           <div class="project-content">
-            <span class="project-tag tag-security">Security · ML</span>
-            <h3 class="project-title">Host Risk Clustering</h3>
-            <p class="project-desc">
+            <span class="project-tag tag-security" data-i18n="proj3.tag">Security · ML</span>
+            <h3 class="project-title" data-i18n="proj3.title">Host Risk Clustering</h3>
+            <p class="project-desc" data-i18n="proj3.desc">
               An unsupervised ML pipeline that classifies network hosts by risk profile — Critical, High, Moderate, or Low —
               using K-Means clustering over aggregated vulnerability indicators including CVSS scores, EPSS probabilities,
               CISA KEV flags, and time-to-exposure. Outputs a labeled CSV and PCA scatter visualization.
@@ -684,25 +661,21 @@
             <div class="project-links">
               <a href="https://github.com/JoseAnicio/HostRiskClustering" target="_blank" class="project-link">
                 <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                View on GitHub
+                <span data-i18n="proj.github">View on GitHub</span>
               </a>
             </div>
           </div>
           <div class="project-image-wrap">
-            <img
-              src="https://raw.githubusercontent.com/JoseAnicio/HostRiskClustering/main/images/Host%20Clustering%20by%20Risk%20Profile.png"
-              alt="Host risk clustering PCA scatter plot"
-              onerror="this.parentElement.innerHTML='<div class=\'project-image-placeholder\'><span class=\'placeholder-icon\'>📡</span></div>'"
-            />
+            <img src="https://raw.githubusercontent.com/JoseAnicio/HostRiskClustering/main/images/Host%20Clustering%20by%20Risk%20Profile.png" alt="Host risk clustering PCA scatter plot" onerror="this.parentElement.innerHTML='<div class=\'project-image-placeholder\'><span class=\'placeholder-icon\'>📡</span></div>'" />
           </div>
         </div>
 
         <!-- 4. GlobalSalesBI -->
         <div class="project-card reverse">
           <div class="project-content">
-            <span class="project-tag tag-bi">Business Intelligence</span>
-            <h3 class="project-title">Global Sales Performance BI</h3>
-            <p class="project-desc">
+            <span class="project-tag tag-bi" data-i18n="proj4.tag">Business Intelligence</span>
+            <h3 class="project-title" data-i18n="proj4.title">Global Sales Performance BI</h3>
+            <p class="project-desc" data-i18n="proj4.desc">
               A multi-page Power BI dashboard analysing global sales across 6 countries, 7 brands, and 6 product categories.
               Features market benchmarking (internal profit vs. market average), drill-down from country to product level,
               geographic heat maps, a data quality layer flagging outlier transactions, and a dynamic filter panel.
@@ -717,25 +690,21 @@
             <div class="project-links">
               <a href="https://github.com/JoseAnicio/GlobalSalesPerformanceBI-Report" target="_blank" class="project-link">
                 <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                View on GitHub
+                <span data-i18n="proj.github">View on GitHub</span>
               </a>
             </div>
           </div>
           <div class="project-image-wrap">
-            <img
-              src="https://github.com/JoseAnicio/GlobalSalesPerformanceBI-Report/raw/main/images/01_overview.png"
-              alt="Global Sales Power BI dashboard overview"
-              onerror="this.parentElement.innerHTML='<div class=\'project-image-placeholder\'><span class=\'placeholder-icon\'>📊</span></div>'"
-            />
+            <img src="https://github.com/JoseAnicio/GlobalSalesPerformanceBI-Report/raw/main/images/01_overview.png" alt="Global Sales Power BI dashboard overview" onerror="this.parentElement.innerHTML='<div class=\'project-image-placeholder\'><span class=\'placeholder-icon\'>📊</span></div>'" />
           </div>
         </div>
 
         <!-- 5. DesktopModeSwitcher -->
         <div class="project-card">
           <div class="project-content">
-            <span class="project-tag tag-automation">Automation</span>
-            <h3 class="project-title">Desktop Mode Switcher</h3>
-            <p class="project-desc">
+            <span class="project-tag tag-automation" data-i18n="proj5.tag">Automation</span>
+            <h3 class="project-title" data-i18n="proj5.title">Desktop Mode Switcher</h3>
+            <p class="project-desc" data-i18n="proj5.desc">
               A Python automation tool that reconfigures a desktop environment on demand —
               opening and closing applications, adjusting layouts, and switching between predefined
               work contexts (focus mode, meeting mode, etc.) to streamline daily computing workflows.
@@ -748,25 +717,21 @@
             <div class="project-links">
               <a href="https://github.com/JoseAnicio/DesktopModeSwitcher" target="_blank" class="project-link">
                 <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                View on GitHub
+                <span data-i18n="proj.github">View on GitHub</span>
               </a>
             </div>
           </div>
           <div class="project-image-wrap">
-            <img
-              src="https://github.com/user-attachments/assets/ac7fe0fb-f484-473a-a54f-a8ad3ce54cb8"
-              alt="Desktop Mode Switcher"
-              onerror="this.parentElement.innerHTML='<div class=\'project-image-placeholder\'><span class=\'placeholder-icon\'>🖥️</span></div>'"
-            />
+            <img src="https://github.com/user-attachments/assets/ac7fe0fb-f484-473a-a54f-a8ad3ce54cb8" alt="Desktop Mode Switcher" onerror="this.parentElement.innerHTML='<div class=\'project-image-placeholder\'><span class=\'placeholder-icon\'>🖥️</span></div>'" />
           </div>
         </div>
 
         <!-- 6. FastDashSearch -->
         <div class="project-card reverse">
           <div class="project-content">
-            <span class="project-tag tag-bi">Business Intelligence</span>
-            <h3 class="project-title">FastDash Search</h3>
-            <p class="project-desc">
+            <span class="project-tag tag-bi" data-i18n="proj6.tag">Business Intelligence</span>
+            <h3 class="project-title" data-i18n="proj6.title">FastDash Search</h3>
+            <p class="project-desc" data-i18n="proj6.desc">
               A fast-search utility for Power BI reports — enabling users to locate dashboards,
               pages, and metrics quickly across large BI environments without navigating
               through the full workspace manually.
@@ -779,16 +744,12 @@
             <div class="project-links">
               <a href="https://github.com/JoseAnicio/FastDashSearch" target="_blank" class="project-link">
                 <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                View on GitHub
+                <span data-i18n="proj.github">View on GitHub</span>
               </a>
             </div>
           </div>
           <div class="project-image-wrap">
-            <img
-              src="https://github.com/user-attachments/assets/5d7e9f3a-6d21-4897-b742-067414d965b6"
-              alt="FastDash Search"
-              onerror="this.parentElement.innerHTML='<div class=\'project-image-placeholder\'><span class=\'placeholder-icon\'>🔍</span></div>'"
-            />
+            <img src="https://github.com/user-attachments/assets/5d7e9f3a-6d21-4897-b742-067414d965b6" alt="FastDash Search" onerror="this.parentElement.innerHTML='<div class=\'project-image-placeholder\'><span class=\'placeholder-icon\'>🔍</span></div>'" />
           </div>
         </div>
 
@@ -800,12 +761,12 @@
   <section id="skills">
     <div class="container">
       <div class="section-header">
-        <p class="section-eyebrow">Expertise</p>
-        <h2 class="section-title">Technical skills</h2>
+        <p class="section-eyebrow" data-i18n="skills.eyebrow">Expertise</p>
+        <h2 class="section-title" data-i18n="skills.title">Technical skills</h2>
       </div>
       <div class="skills-grid">
         <div class="skill-group">
-          <p class="skill-group-title">Languages & Core</p>
+          <p class="skill-group-title" data-i18n="skills.lang">Languages & Core</p>
           <div class="skill-list">
             <div class="skill-item"><span class="skill-dot dot-blue"></span>Python 3.10+</div>
             <div class="skill-item"><span class="skill-dot dot-blue"></span>SQL (PostgreSQL, MySQL, BigQuery)</div>
@@ -816,7 +777,7 @@
           </div>
         </div>
         <div class="skill-group">
-          <p class="skill-group-title">Machine Learning</p>
+          <p class="skill-group-title" data-i18n="skills.ml">Machine Learning</p>
           <div class="skill-list">
             <div class="skill-item"><span class="skill-dot dot-orange"></span>XGBoost, scikit-learn</div>
             <div class="skill-item"><span class="skill-dot dot-orange"></span>K-Means, PCA, clustering</div>
@@ -827,29 +788,29 @@
           </div>
         </div>
         <div class="skill-group">
-          <p class="skill-group-title">Data Engineering</p>
+          <p class="skill-group-title" data-i18n="skills.de">Data Engineering</p>
           <div class="skill-list">
             <div class="skill-item"><span class="skill-dot dot-green"></span>Google BigQuery (GCP)</div>
             <div class="skill-item"><span class="skill-dot dot-green"></span>PostgreSQL + Docker</div>
-            <div class="skill-item"><span class="skill-dot dot-green"></span>ETL / ELT pipeline design</div>
+            <div class="skill-item"><span class="skill-dot dot-green"></span><span data-i18n="skills.etl">ETL / ELT pipeline design</span></div>
             <div class="skill-item"><span class="skill-dot dot-green"></span>PySpark / Apache Spark</div>
             <div class="skill-item"><span class="skill-dot dot-green"></span>Databricks</div>
             <div class="skill-item"><span class="skill-dot dot-green"></span>SQLAlchemy, psycopg2</div>
           </div>
         </div>
         <div class="skill-group">
-          <p class="skill-group-title">Visualization & BI</p>
+          <p class="skill-group-title" data-i18n="skills.viz">Visualization & BI</p>
           <div class="skill-list">
             <div class="skill-item"><span class="skill-dot dot-yellow"></span>Power BI (RLS, DAX)</div>
             <div class="skill-item"><span class="skill-dot dot-yellow"></span>Looker, Tableau</div>
             <div class="skill-item"><span class="skill-dot dot-yellow"></span>Excel</div>
             <div class="skill-item"><span class="skill-dot dot-yellow"></span>Plotly, Matplotlib</div>
             <div class="skill-item"><span class="skill-dot dot-yellow"></span>Gradio, Streamlit</div>
-            <div class="skill-item"><span class="skill-dot dot-yellow"></span>KPI & dashboard design</div>
+            <div class="skill-item"><span class="skill-dot dot-yellow"></span><span data-i18n="skills.kpi">KPI & dashboard design</span></div>
           </div>
         </div>
         <div class="skill-group">
-          <p class="skill-group-title">AWS & Cloud</p>
+          <p class="skill-group-title" data-i18n="skills.cloud">AWS & Cloud</p>
           <div class="skill-list">
             <div class="skill-item"><span class="skill-dot dot-orange"></span>Amazon Athena</div>
             <div class="skill-item"><span class="skill-dot dot-orange"></span>Amazon S3</div>
@@ -859,16 +820,16 @@
           </div>
         </div>
         <div class="skill-group">
-          <p class="skill-group-title">Security Analytics</p>
+          <p class="skill-group-title" data-i18n="skills.sec">Security Analytics</p>
           <div class="skill-list">
             <div class="skill-item"><span class="skill-dot dot-blue"></span>CVE / NVD data (CVSS, EPSS)</div>
             <div class="skill-item"><span class="skill-dot dot-blue"></span>CISA KEV analysis</div>
-            <div class="skill-item"><span class="skill-dot dot-blue"></span>Host risk profiling</div>
-            <div class="skill-item"><span class="skill-dot dot-blue"></span>Vulnerability triage</div>
+            <div class="skill-item"><span class="skill-dot dot-blue"></span><span data-i18n="skills.hostrisk">Host risk profiling</span></div>
+            <div class="skill-item"><span class="skill-dot dot-blue"></span><span data-i18n="skills.vuln">Vulnerability triage</span></div>
           </div>
         </div>
         <div class="skill-group">
-          <p class="skill-group-title">Infrastructure</p>
+          <p class="skill-group-title" data-i18n="skills.infra">Infrastructure</p>
           <div class="skill-list">
             <div class="skill-item"><span class="skill-dot dot-purple"></span>Docker / docker-compose</div>
             <div class="skill-item"><span class="skill-dot dot-purple"></span>Git / GitHub</div>
@@ -883,35 +844,12 @@
   <section id="about">
     <div class="container">
       <div class="section-header">
-        <p class="section-eyebrow">Background</p>
-        <h2 class="section-title">About me</h2>
+        <p class="section-eyebrow" data-i18n="about.eyebrow">Background</p>
+        <h2 class="section-title" data-i18n="about.title">About me</h2>
       </div>
       <div class="about-grid about-grid--single">
-        <div class="about-text">
-          <p>
-            I'm a data professional based in Brazil with hands-on experience building complete data systems —
-            from ingestion pipelines and ML models to analytical dashboards and LLM-powered applications.
-          </p>
-          <p>
-            Professionally, I've worked across the full data stack in the cybersecurity domain for several years —
-            managing <strong>70+ monthly vulnerability management reports</strong>, leading data migrations for
-            <strong>50+ clients into AWS Athena and PostgreSQL</strong>, and building KPI dashboards used by executive
-            leadership across LATAM. I've also mentored junior analysts and coordinated cross-functional teams in
-            Brazil, Chile, Argentina, Peru, and Colombia.
-          </p>
-          <p>
-            My toolkit includes heavy use of <strong>Python and Pandas</strong> for automation and data transformation,
-            <strong>PySpark</strong> for large-scale pipeline updates, <strong>Power Automate</strong> for workflow
-            automation (cutting repetitive task time by up to 70%), and <strong>Power BI</strong> for strategic
-            dashboards aligned to client KPIs. I regularly presented data-driven reports directly to management and
-            corporate clients.
-          </p>
-          <p>
-            My personal projects span <strong>machine learning</strong> (predictive modelling and unsupervised clustering),
-            <strong>security analytics</strong> (CVE data, RAG-based Q&A, host risk scoring), and
-            <strong>business intelligence</strong> (Power BI dashboards with real KPIs and data quality monitoring).
-            I'm currently completing a postgraduate specialization in Artificial Intelligence and Computational Intelligence.
-          </p>
+        <div class="about-text" id="aboutText">
+          <!-- populated by JS -->
         </div>
       </div>
     </div>
@@ -921,19 +859,19 @@
   <section id="contact">
     <div class="container">
       <div class="contact-inner">
-        <p class="section-eyebrow" style="text-align:center; margin-bottom:0.5rem;">Contact</p>
-        <h2 class="section-title">Let's connect</h2>
-        <p>Whether you're a researcher, a recruiter, or an admissions committee — I'm always open to a conversation.</p>
+        <p class="section-eyebrow" style="text-align:center; margin-bottom:0.5rem;" data-i18n="contact.eyebrow">Contact</p>
+        <h2 class="section-title" data-i18n="contact.title">Let's connect</h2>
+        <p data-i18n="contact.sub">Whether you're a researcher, a recruiter, or an admissions committee — I'm always open to a conversation.</p>
         <div class="contact-links">
           <a href="https://github.com/JoseAnicio" target="_blank" class="btn btn-primary">
             <svg viewBox="0 0 16 16" fill="currentColor" width="15" height="15"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
             GitHub
           </a>
-          <a href="mailto: ojoseanicio@gmail.com" class="btn btn-ghost">
+          <a href="mailto:ojoseanicio@gmail.com" class="btn btn-ghost">
             <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" width="15" height="15"><path d="M2.5 5.5l7.5 5 7.5-5M2.5 4.5h15a1 1 0 011 1v9a1 1 0 01-1 1h-15a1 1 0 01-1-1v-9a1 1 0 011-1z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Email me
+            <span data-i18n="hero.contact">Get in touch</span>
           </a>
-          <a href="https://linkedin.com/in/" target="_blank" class="btn btn-ghost">
+          <a href="https://linkedin.com/in/joseanicio" target="_blank" class="btn btn-ghost">
             <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
             LinkedIn
           </a>
@@ -946,9 +884,235 @@
   <footer>
     <div class="container" style="display:flex; align-items:center; justify-content:space-between; width:100%;">
       <p>© 2025 José Anício</p>
-      <p style="color:var(--text-dim);">Built with HTML · Hosted on GitHub Pages</p>
+      <p data-i18n="footer.built">Built with HTML · Hosted on GitHub Pages</p>
     </div>
   </footer>
 
+  <script>
+  // ─────────────────────────────────────────
+  // TRANSLATIONS
+  // ─────────────────────────────────────────
+  const translations = {
+    en: {
+      "nav.projects": "Projects",
+      "nav.skills": "Skills",
+      "nav.about": "About",
+      "nav.contact": "Contact",
+      "hero.label": "Data Engineer / Data Scientist / Data Analyst",
+      "hero.bio": `I build end-to-end data systems — from raw data ingestion pipelines to machine learning models and interactive dashboards. My work sits at the intersection of <strong style="color:var(--text);font-weight:500;">data engineering</strong>, <strong style="color:var(--text);font-weight:500;">data science</strong>, and <strong style="color:var(--text);font-weight:500;">data analytics</strong>.`,
+      "hero.github": "GitHub Profile",
+      "hero.contact": "Get in touch",
+      "projects.eyebrow": "Work",
+      "projects.title": "Featured projects",
+      "projects.sub": "A selection of systems built across ML, security analytics, and business intelligence.",
+      "proj.github": "View on GitHub",
+      "proj1.title": "Crop Prediction System",
+      "proj1.desc": "An end-to-end ML system that recommends the best crop to plant and estimates yield from soil and climate data. Built on a full data engineering pipeline — from Google BigQuery through PostgreSQL to a live Gradio interface — achieving near-perfect classification accuracy (≈99–100%) across 22 crop types.",
+      "proj2.tag": "Security · LLM",
+      "proj2.title": "AskCVE — RAG Security Q&A",
+      "proj2.desc": "A Retrieval-Augmented Generation system for querying real vulnerability data from the National Vulnerability Database (NVD). Instead of relying on generic LLM knowledge, questions are answered by finding the 5 most semantically relevant CVEs and grounding Llama 3.1's response in actual exploit data — across Apache, OpenSSL, Linux, WordPress, and more.",
+      "proj3.tag": "Security · ML",
+      "proj3.title": "Host Risk Clustering",
+      "proj3.desc": "An unsupervised ML pipeline that classifies network hosts by risk profile — Critical, High, Moderate, or Low — using K-Means clustering over aggregated vulnerability indicators including CVSS scores, EPSS probabilities, CISA KEV flags, and time-to-exposure. Outputs a labeled CSV and PCA scatter visualization.",
+      "proj4.tag": "Business Intelligence",
+      "proj4.title": "Global Sales Performance BI",
+      "proj4.desc": "A multi-page Power BI dashboard analysing global sales across 6 countries, 7 brands, and 6 product categories. Features market benchmarking (internal profit vs. market average), drill-down from country to product level, geographic heat maps, a data quality layer flagging outlier transactions, and a dynamic filter panel.",
+      "proj5.tag": "Automation",
+      "proj5.title": "Desktop Mode Switcher",
+      "proj5.desc": "A Python automation tool that reconfigures a desktop environment on demand — opening and closing applications, adjusting layouts, and switching between predefined work contexts (focus mode, meeting mode, etc.) to streamline daily computing workflows.",
+      "proj6.tag": "Business Intelligence",
+      "proj6.title": "FastDash Search",
+      "proj6.desc": "A fast-search utility for Power BI reports — enabling users to locate dashboards, pages, and metrics quickly across large BI environments without navigating through the full workspace manually.",
+      "skills.eyebrow": "Expertise",
+      "skills.title": "Technical skills",
+      "skills.lang": "Languages & Core",
+      "skills.ml": "Machine Learning",
+      "skills.de": "Data Engineering",
+      "skills.etl": "ETL / ELT pipeline design",
+      "skills.viz": "Visualization & BI",
+      "skills.kpi": "KPI & dashboard design",
+      "skills.cloud": "AWS & Cloud",
+      "skills.sec": "Security Analytics",
+      "skills.hostrisk": "Host risk profiling",
+      "skills.vuln": "Vulnerability triage",
+      "skills.infra": "Infrastructure",
+      "about.eyebrow": "Background",
+      "about.title": "About me",
+      "about.body": `<p>I'm a data professional based in Brazil with hands-on experience building complete data systems — from ingestion pipelines and ML models to analytical dashboards and LLM-powered applications.</p>
+<p>Professionally, I've worked across the full data stack in the cybersecurity domain for several years — managing <strong>70+ monthly vulnerability management reports</strong>, leading data migrations for <strong>50+ clients into AWS Athena and PostgreSQL</strong>, and building KPI dashboards used by executive leadership across LATAM. I've also mentored junior analysts and coordinated cross-functional teams in Brazil, Chile, Argentina, Peru, and Colombia.</p>
+<p>My toolkit includes heavy use of <strong>Python and Pandas</strong> for automation and data transformation, <strong>PySpark</strong> for large-scale pipeline updates, <strong>Power Automate</strong> for workflow automation (cutting repetitive task time by up to 70%), and <strong>Power BI</strong> for strategic dashboards aligned to client KPIs. I regularly presented data-driven reports directly to management and corporate clients.</p>
+<p>My personal projects span <strong>machine learning</strong> (predictive modelling and unsupervised clustering), <strong>security analytics</strong> (CVE data, RAG-based Q&A, host risk scoring), and <strong>business intelligence</strong> (Power BI dashboards with real KPIs and data quality monitoring). I'm currently completing a postgraduate specialization in Artificial Intelligence and Computational Intelligence.</p>`,
+      "contact.eyebrow": "Contact",
+      "contact.title": "Let's connect",
+      "contact.sub": "Whether you're a researcher, a recruiter, or an admissions committee — I'm always open to a conversation.",
+      "footer.built": "Built with HTML · Hosted on GitHub Pages",
+    },
+    pt: {
+      "nav.projects": "Projetos",
+      "nav.skills": "Habilidades",
+      "nav.about": "Sobre",
+      "nav.contact": "Contato",
+      "hero.label": "Engenheiro de Dados / Cientista de Dados / Analista de Dados",
+      "hero.bio": `Construo sistemas de dados de ponta a ponta — desde pipelines de ingestão até modelos de machine learning e dashboards interativos. Meu trabalho está na interseção de <strong style="color:var(--text);font-weight:500;">engenharia de dados</strong>, <strong style="color:var(--text);font-weight:500;">ciência de dados</strong> e <strong style="color:var(--text);font-weight:500;">análise de dados</strong>.`,
+      "hero.github": "Perfil no GitHub",
+      "hero.contact": "Entre em contato",
+      "projects.eyebrow": "Trabalho",
+      "projects.title": "Projetos em destaque",
+      "projects.sub": "Uma seleção de sistemas construídos em ML, análise de segurança e business intelligence.",
+      "proj.github": "Ver no GitHub",
+      "proj1.title": "Sistema de Previsão de Culturas",
+      "proj1.desc": "Um sistema de ML completo que recomenda a melhor cultura a plantar e estima a produtividade a partir de dados de solo e clima. Construído sobre um pipeline de engenharia de dados — do Google BigQuery passando pelo PostgreSQL até uma interface Gradio ao vivo — alcançando acurácia de classificação quase perfeita (≈99–100%) em 22 tipos de culturas.",
+      "proj2.tag": "Segurança · LLM",
+      "proj2.title": "AskCVE — Q&A de Segurança com RAG",
+      "proj2.desc": "Um sistema de Retrieval-Augmented Generation para consultar dados reais de vulnerabilidades do National Vulnerability Database (NVD). Em vez de depender do conhecimento genérico de LLMs, as perguntas são respondidas encontrando os 5 CVEs semanticamente mais relevantes e embasando a resposta do Llama 3.1 em dados reais de exploits — cobrindo Apache, OpenSSL, Linux, WordPress e mais.",
+      "proj3.tag": "Segurança · ML",
+      "proj3.title": "Clusterização de Risco de Hosts",
+      "proj3.desc": "Um pipeline de ML não supervisionado que classifica hosts de rede por perfil de risco — Crítico, Alto, Moderado ou Baixo — usando K-Means sobre indicadores de vulnerabilidade agregados, incluindo pontuações CVSS, probabilidades EPSS, flags CISA KEV e tempo de exposição. Gera um CSV rotulado e uma visualização de dispersão por PCA.",
+      "proj4.tag": "Business Intelligence",
+      "proj4.title": "BI de Desempenho de Vendas Globais",
+      "proj4.desc": "Um dashboard Power BI multipágina que analisa vendas globais em 6 países, 7 marcas e 6 categorias de produtos. Inclui benchmarking de mercado (lucro interno vs. média de mercado), drill-down do país ao produto, mapas de calor geográficos, uma camada de qualidade de dados sinalizando transações atípicas e um painel de filtros dinâmicos.",
+      "proj5.tag": "Automação",
+      "proj5.title": "Desktop Mode Switcher",
+      "proj5.desc": "Uma ferramenta de automação em Python que reconfigura o ambiente de trabalho sob demanda — abrindo e fechando aplicações, ajustando layouts e alternando entre contextos de trabalho predefinidos (modo foco, modo reunião, etc.) para otimizar o fluxo de trabalho diário.",
+      "proj6.tag": "Business Intelligence",
+      "proj6.title": "FastDash Search",
+      "proj6.desc": "Um utilitário de busca rápida para relatórios Power BI — permitindo que usuários localizem dashboards, páginas e métricas rapidamente em ambientes de BI grandes, sem precisar navegar manualmente por todo o workspace.",
+      "skills.eyebrow": "Expertise",
+      "skills.title": "Habilidades técnicas",
+      "skills.lang": "Linguagens & Fundamentos",
+      "skills.ml": "Machine Learning",
+      "skills.de": "Engenharia de Dados",
+      "skills.etl": "Design de pipelines ETL / ELT",
+      "skills.viz": "Visualização & BI",
+      "skills.kpi": "Design de KPIs & dashboards",
+      "skills.cloud": "AWS & Nuvem",
+      "skills.sec": "Análise de Segurança",
+      "skills.hostrisk": "Perfilamento de risco de hosts",
+      "skills.vuln": "Triagem de vulnerabilidades",
+      "skills.infra": "Infraestrutura",
+      "about.eyebrow": "Trajetória",
+      "about.title": "Sobre mim",
+      "about.body": `<p>Sou um profissional de dados baseado no Brasil com experiência prática na construção de sistemas completos de dados — desde pipelines de ingestão e modelos de ML até dashboards analíticos e aplicações com LLMs.</p>
+<p>Profissionalmente, trabalhei em toda a stack de dados no domínio de cibersegurança por vários anos — gerenciando <strong>mais de 70 relatórios mensais de gestão de vulnerabilidades</strong>, liderando migrações de dados de <strong>mais de 50 clientes para AWS Athena e PostgreSQL</strong> e construindo dashboards de KPIs usados pela liderança executiva em toda a LATAM. Também fiz mentoria de analistas júnior e coordenei times multifuncionais no Brasil, Chile, Argentina, Peru e Colômbia.</p>
+<p>Meu conjunto de ferramentas inclui uso intenso de <strong>Python e Pandas</strong> para automação e transformação de dados, <strong>PySpark</strong> para atualizações de pipelines em larga escala, <strong>Power Automate</strong> para automação de fluxos de trabalho (reduzindo o tempo de tarefas repetitivas em até 70%) e <strong>Power BI</strong> para dashboards estratégicos alinhados aos KPIs dos clientes. Apresentei relatórios baseados em dados diretamente para a gestão e clientes corporativos.</p>
+<p>Meus projetos pessoais abrangem <strong>machine learning</strong> (modelagem preditiva e clusterização não supervisionada), <strong>análise de segurança</strong> (dados CVE, Q&A com RAG, pontuação de risco de hosts) e <strong>business intelligence</strong> (dashboards Power BI com KPIs reais e monitoramento de qualidade de dados). Atualmente estou concluindo uma pós-graduação em Inteligência Artificial e Inteligência Computacional.</p>`,
+      "contact.eyebrow": "Contato",
+      "contact.title": "Vamos conversar",
+      "contact.sub": "Seja você um pesquisador, recrutador ou comitê de admissões — estou sempre aberto a uma conversa.",
+      "footer.built": "Feito com HTML · Hospedado no GitHub Pages",
+    },
+    es: {
+      "nav.projects": "Proyectos",
+      "nav.skills": "Habilidades",
+      "nav.about": "Acerca",
+      "nav.contact": "Contacto",
+      "hero.label": "Ingeniero de Datos / Científico de Datos / Analista de Datos",
+      "hero.bio": `Construyo sistemas de datos de extremo a extremo — desde pipelines de ingestión hasta modelos de machine learning y dashboards interactivos. Mi trabajo se sitúa en la intersección de <strong style="color:var(--text);font-weight:500;">ingeniería de datos</strong>, <strong style="color:var(--text);font-weight:500;">ciencia de datos</strong> y <strong style="color:var(--text);font-weight:500;">análisis de datos</strong>.`,
+      "hero.github": "Perfil en GitHub",
+      "hero.contact": "Contáctame",
+      "projects.eyebrow": "Trabajo",
+      "projects.title": "Proyectos destacados",
+      "projects.sub": "Una selección de sistemas construidos en ML, analítica de seguridad e inteligencia de negocio.",
+      "proj.github": "Ver en GitHub",
+      "proj1.title": "Sistema de Predicción de Cultivos",
+      "proj1.desc": "Un sistema ML de extremo a extremo que recomienda el mejor cultivo a plantar y estima el rendimiento a partir de datos de suelo y clima. Construido sobre un pipeline completo de ingeniería de datos — desde Google BigQuery pasando por PostgreSQL hasta una interfaz Gradio en vivo — alcanzando una precisión de clasificación casi perfecta (≈99–100%) en 22 tipos de cultivos.",
+      "proj2.tag": "Seguridad · LLM",
+      "proj2.title": "AskCVE — Q&A de Seguridad con RAG",
+      "proj2.desc": "Un sistema de Retrieval-Augmented Generation para consultar datos reales de vulnerabilidades del National Vulnerability Database (NVD). En lugar de depender del conocimiento genérico de LLMs, las preguntas se responden encontrando los 5 CVEs semánticamente más relevantes y fundamentando la respuesta de Llama 3.1 en datos reales de exploits — cubriendo Apache, OpenSSL, Linux, WordPress y más.",
+      "proj3.tag": "Seguridad · ML",
+      "proj3.title": "Clustering de Riesgo de Hosts",
+      "proj3.desc": "Un pipeline de ML no supervisado que clasifica hosts de red por perfil de riesgo — Crítico, Alto, Moderado o Bajo — usando K-Means sobre indicadores de vulnerabilidad agregados, incluyendo puntuaciones CVSS, probabilidades EPSS, flags CISA KEV y tiempo de exposición. Genera un CSV etiquetado y una visualización de dispersión por PCA.",
+      "proj4.tag": "Inteligencia de Negocio",
+      "proj4.title": "BI de Rendimiento de Ventas Global",
+      "proj4.desc": "Un dashboard Power BI multipágina que analiza ventas globales en 6 países, 7 marcas y 6 categorías de productos. Incluye benchmarking de mercado (beneficio interno vs. promedio de mercado), drill-down desde el país al producto, mapas de calor geográficos, una capa de calidad de datos para transacciones atípicas y un panel de filtros dinámicos.",
+      "proj5.tag": "Automatización",
+      "proj5.title": "Desktop Mode Switcher",
+      "proj5.desc": "Una herramienta de automatización en Python que reconfigura el entorno de escritorio bajo demanda — abriendo y cerrando aplicaciones, ajustando layouts y alternando entre contextos de trabajo predefinidos (modo enfoque, modo reunión, etc.) para optimizar el flujo de trabajo diario.",
+      "proj6.tag": "Inteligencia de Negocio",
+      "proj6.title": "FastDash Search",
+      "proj6.desc": "Una utilidad de búsqueda rápida para informes Power BI — que permite a los usuarios localizar dashboards, páginas y métricas rápidamente en entornos de BI grandes, sin necesidad de navegar manualmente por todo el workspace.",
+      "skills.eyebrow": "Expertise",
+      "skills.title": "Habilidades técnicas",
+      "skills.lang": "Lenguajes & Fundamentos",
+      "skills.ml": "Machine Learning",
+      "skills.de": "Ingeniería de Datos",
+      "skills.etl": "Diseño de pipelines ETL / ELT",
+      "skills.viz": "Visualización & BI",
+      "skills.kpi": "Diseño de KPIs & dashboards",
+      "skills.cloud": "AWS & Nube",
+      "skills.sec": "Analítica de Seguridad",
+      "skills.hostrisk": "Perfilado de riesgo de hosts",
+      "skills.vuln": "Triaje de vulnerabilidades",
+      "skills.infra": "Infraestructura",
+      "about.eyebrow": "Trayectoria",
+      "about.title": "Acerca de mí",
+      "about.body": `<p>Soy un profesional de datos con base en Brasil, con experiencia práctica en la construcción de sistemas completos de datos — desde pipelines de ingestión y modelos de ML hasta dashboards analíticos y aplicaciones con LLMs.</p>
+<p>Profesionalmente, he trabajado en toda la stack de datos en el dominio de ciberseguridad durante varios años — gestionando <strong>más de 70 informes mensuales de gestión de vulnerabilidades</strong>, liderando migraciones de datos de <strong>más de 50 clientes a AWS Athena y PostgreSQL</strong>, y construyendo dashboards de KPIs utilizados por la dirección ejecutiva en toda LATAM. También he mentorizado analistas junior y coordinado equipos multifuncionales en Brasil, Chile, Argentina, Perú y Colombia.</p>
+<p>Mi conjunto de herramientas incluye el uso intensivo de <strong>Python y Pandas</strong> para automatización y transformación de datos, <strong>PySpark</strong> para actualizaciones de pipelines a gran escala, <strong>Power Automate</strong> para automatización de flujos de trabajo (reduciendo el tiempo en tareas repetitivas hasta un 70%) y <strong>Power BI</strong> para dashboards estratégicos alineados a los KPIs de los clientes. Presenté informes basados en datos directamente a la dirección y a clientes corporativos.</p>
+<p>Mis proyectos personales abarcan <strong>machine learning</strong> (modelado predictivo y clustering no supervisado), <strong>analítica de seguridad</strong> (datos CVE, Q&A con RAG, puntuación de riesgo de hosts) e <strong>inteligencia de negocio</strong> (dashboards Power BI con KPIs reales y monitoreo de calidad de datos). Actualmente estoy finalizando una especialización de posgrado en Inteligencia Artificial e Inteligencia Computacional.</p>`,
+      "contact.eyebrow": "Contacto",
+      "contact.title": "Hablemos",
+      "contact.sub": "Seas investigador, reclutador o comité de admisiones — siempre estoy abierto a una conversación.",
+      "footer.built": "Hecho con HTML · Alojado en GitHub Pages",
+    }
+  };
+
+  const langLabels = { en: "EN", pt: "PT", es: "ES" };
+  let currentLang = "en";
+
+  function applyTranslations(lang) {
+    const t = translations[lang];
+    // Simple data-i18n elements
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const key = el.getAttribute("data-i18n");
+      if (t[key] !== undefined) {
+        el.innerHTML = t[key];
+      }
+    });
+    // About body (dynamic)
+    const aboutEl = document.getElementById("aboutText");
+    if (aboutEl && t["about.body"]) aboutEl.innerHTML = t["about.body"];
+    // Update html lang attr
+    document.documentElement.lang = lang;
+  }
+
+  function setLang(lang) {
+    currentLang = lang;
+    applyTranslations(lang);
+    document.getElementById("langCurrent").textContent = langLabels[lang];
+    document.querySelectorAll(".lang-option").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.lang === lang);
+    });
+    closeLangDropdown();
+  }
+
+  function closeLangDropdown() {
+    const sw = document.getElementById("langSwitcher");
+    sw.classList.remove("open");
+    document.getElementById("langBtn").setAttribute("aria-expanded", "false");
+  }
+
+  document.getElementById("langBtn").addEventListener("click", function(e) {
+    e.stopPropagation();
+    const sw = document.getElementById("langSwitcher");
+    const isOpen = sw.classList.toggle("open");
+    this.setAttribute("aria-expanded", isOpen);
+  });
+
+  document.querySelectorAll(".lang-option").forEach(btn => {
+    btn.addEventListener("click", function() {
+      setLang(this.dataset.lang);
+    });
+  });
+
+  document.addEventListener("click", function(e) {
+    if (!document.getElementById("langSwitcher").contains(e.target)) {
+      closeLangDropdown();
+    }
+  });
+
+  // Init
+  applyTranslations("en");
+  </script>
 </body>
 </html>
